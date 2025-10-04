@@ -1,17 +1,9 @@
-import { useSignIn, useSSO } from '@clerk/clerk-expo'
-import { Link, useRouter } from 'expo-router'
-import { Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { useSSO } from '@clerk/clerk-expo'
 import React from 'react'
-import { Button } from 'react-native-paper'
+import { Pressable, Text, View } from 'react-native'
 
 export default function Page() {
-  const { signIn, setActive, isLoaded } = useSignIn()
   const { startSSOFlow } = useSSO()
-  const router = useRouter()
-
-  const [emailAddress, setEmailAddress] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const [isError, setIsError] = React.useState<Error | null>(null)
 
   const handleGoogleSignIn = async () => {
     try {
@@ -24,43 +16,17 @@ export default function Page() {
       }
     } catch (error) {
       console.error('Google sign-in error:', error)
-      setIsError(error as Error)
+      console.log(error)
     }
   }
 
 
   return (
     <View className='flex-1 items-center justify-center'>
-      <Text className='text-4xl mb-4 w-80'>Sign in</Text>
-      <TextInput
-        className='w-80 p-2 border border-gray-300 rounded-md mb-2 placeholder:text-gray-400'
-        autoCapitalize="none"
-        value={emailAddress}
-        placeholder="Enter email"
-        onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
-      />
-      <TextInput
-        className='w-80 p-2 border border-gray-300 rounded-md mb-2 placeholder:text-gray-400'
-        value={password}
-        placeholder="Enter password"
-        secureTextEntry={true}
-        onChangeText={(password) => setPassword(password)}
-      />
-
-      {isError && 
-        <Text className='text-red-500 text-left w-80'>{isError.message}</Text>
-      }
-      
-      <Pressable className='w-80 p-2 bg-blue-500 text-white rounded-md my-2' >
-        <Text className='text-center text-white py-1'>Continue</Text>
-      </Pressable>
-
-      <Text className='text-gray-500'>--- or ---</Text>
-
+      <Text className='text-5xl font-semibold mb-4 w-80'>Sign in</Text>
       <Pressable className='w-80 p-2 rounded-md border border-black my-2' onPress={handleGoogleSignIn}>
         <Text className='text-center text-black py-1'>Sign in with Google</Text>
       </Pressable>
-
     </View>
   )
 }

@@ -3,22 +3,6 @@ const EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHA
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const env = {
   EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY,
 };
