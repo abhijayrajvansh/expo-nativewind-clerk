@@ -1,4 +1,4 @@
-import { useSignIn } from '@clerk/clerk-expo'
+import { useSignIn, useSSO } from '@clerk/clerk-expo'
 import { Link, useRouter } from 'expo-router'
 import { Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React from 'react'
@@ -6,11 +6,27 @@ import { Button } from 'react-native-paper'
 
 export default function Page() {
   const { signIn, setActive, isLoaded } = useSignIn()
+  const { startSSOFlow } = useSSO()
   const router = useRouter()
 
   const [emailAddress, setEmailAddress] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [isError, setIsError] = React.useState<Error | null>(null)
+
+  const handleGoogleSignIn = async () => {
+    try {
+      const { createdSessionId, setActive: setActiveSession } = await startSSOFlow({
+        strategy: 'oauth_google',
+      })
+      
+      if (createdSessionId && setActiveSession) {
+        setActiveSession({ session: createdSessionId })
+      }
+    } catch (error) {
+      console.error('Google sign-in error:', error)
+      setIsError(error as Error)
+    }
+  }
 
 
   return (
@@ -41,7 +57,7 @@ export default function Page() {
 
       <Text className='text-gray-500'>--- or ---</Text>
 
-      <Pressable className='w-80 p-2 rounded-md border border-black my-2'>
+      <Pressable className='w-80 p-2 rounded-md border border-black my-2' onPress={handleGoogleSignIn}>
         <Text className='text-center text-black py-1'>Sign in with Google</Text>
       </Pressable>
 
