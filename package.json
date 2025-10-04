@@ -3,6 +3,7 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
+    "dev:clean": "node -e \"try{require('child_process').execSync('pkill -f \\\"expo|metro\\\" || true');}catch{}\" && rm -rf .expo .expo-shared && rm -rf $TMPDIR/metro-* $TMPDIR/haste-map-* && expo start -c",
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo start --android",
