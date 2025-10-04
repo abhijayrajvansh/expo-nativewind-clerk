@@ -1,6 +1,7 @@
 import { Slot, Stack } from "expo-router";
 import env from '@/env';
 import { ClerkProvider, ClerkLoaded } from '@clerk/clerk-expo'
+import "@/styles/global.css"
 import { tokenCache } from '@clerk/clerk-expo/token-cache'
 
 // checking if clerk key is defined or not

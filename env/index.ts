@@ -24,5 +24,3 @@ const env = {
 };
 
 export default env;
-
-console.log({EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY})
